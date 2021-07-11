@@ -12,12 +12,19 @@ class App:
     def __init__(self):
         self._running = True
         self._display_surf = None
-        self.size = self.width, self.height = 800, 600
+        self.size = self.width, self.height = 640, 480
         self.max_square_size = 100
         self.root_pos_x = (self.width - self.max_square_size) / 2
         self.root_pos_y = 20
         self.loop_duration_ms = 3000
-        self.max_list_size = 50
+        self.max_list_size = 15
+        self.square_colors = [
+            (255, 0, 0),
+            (255, 255, 0),
+            (0, 255, 0),
+            (0, 0, 255),
+            (255, 0, 255)
+        ]
 
     def on_init(self):
         pygame.init()
@@ -32,53 +39,39 @@ class App:
             if event.key == K_ESCAPE:
                 self._running = False
 
-    def on_loop(self):
-        pass
+    def render_list(self, angle_rad: float, p1: Point, p4: Point, step_index: int) -> None:
+        base_v = p4 - p1
+        side_length = base_v.norm()
+        scaled_normal = base_v.normals()[0].unit()*side_length
+        p2 = p1+scaled_normal
+        p3 = p4+scaled_normal
+        new_side_length = math.cos(angle_rad)*side_length
+        new_angle = base_v.angle()+angle_rad
+        p5 = p2 + Vector(math.cos(new_angle),
+                         math.sin(new_angle))*new_side_length
 
-    def render_root(self, pos):
-        pygame.draw.rect(
-            self._display_surf,
-            (255, 0, 0),
-            pos)
-
-    def render_list(self, angle_rad: float, t_current: float, anchor_point: Point, step_index: int, size_parent: float, is_old_list: bool) -> None:
-        if is_old_list == True:
-            size_current = size_parent * math.cos(angle_rad)
-        else:
-            size_current = size_parent * math.sin(angle_rad)
         # No point in drawing invisible boxes
-        if size_current < 1:
+        if side_length < 1:
             return
         if step_index > self.max_list_size:
             return
         # Think of each box rotating around its anchor point. This is the value we use for actual rotation
         angle_rad_current = angle_rad * step_index
-        # Calculate points in clockwise in the square, starting with the anchor point
-        p1 = anchor_point
-        p2 = p1 + Vector(size_current*math.cos(angle_rad_current+math.pi/2),
-                         size_current*math.sin(angle_rad_current+math.pi/2))
-        p3 = p2 + Vector(size_current*math.cos(angle_rad_current),
-                         size_current*math.sin(angle_rad_current))
-        p4 = p1 + Vector(size_current*math.cos(angle_rad_current),
-                         size_current*math.sin(angle_rad_current))
 
         pygame.draw.polygon(
             self._display_surf,
-            (0, 255, 0),
+            self.square_colors[(step_index-1) % len(self.square_colors)],
             [p1.to_tuple(), p2.to_tuple(), p3.to_tuple(), p4.to_tuple()])
-        # p_ref = p2 if is_old_list else p3
-        # self.render_list(angle_rad, t_current, p_ref,
-        #                  step_index+1, size_current, is_old_list)
 
-    def on_render(self, angle_rad, t_current):
+        self.render_list(angle_rad, p2, p5, step_index+1)
+        self.render_list(angle_rad, p5, p3, step_index+1)
+
+    def on_render(self, angle_rad):
         self._display_surf.fill((0, 0, 0))
         root_pos = (self.root_pos_x, self.root_pos_y,
                     self.max_square_size, self.max_square_size)
-        self.render_root(root_pos)
-        self.render_list(angle_rad, t_current,
-                         Point(self.root_pos_x, self.root_pos_y+self.max_square_size), 1, self.max_square_size, True)
-        self.render_list(angle_rad, t_current,
-                         Point(self.root_pos_x+self.max_square_size, self.root_pos_y+self.max_square_size), 1, self.max_square_size, False)
+        self.render_list(angle_rad, Point(self.root_pos_x, self.root_pos_y), Point(
+            self.root_pos_x+self.max_square_size, self.root_pos_y), 1)
         # Flip the Y-axis so we can have positive Y pointing upwards on the screen
         self._display_surf.blit(pygame.transform.flip(
             self._display_surf, False, True), (0, 0))
@@ -98,8 +91,7 @@ class App:
             angle_rad = t_current*math.pi/2
             for event in pygame.event.get():
                 self.on_event(event)
-            self.on_loop()
-            self.on_render(angle_rad, t_current)
+            self.on_render(angle_rad)
         self.on_cleanup()
 
 
