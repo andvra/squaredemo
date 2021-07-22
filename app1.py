@@ -110,3 +110,8 @@ class App1:
             self.on_render(angle_rad, False)
         print(f"Took {perf_counter()-t_start} s")
         self.on_cleanup()
+
+
+if __name__ == "__main__":
+    app = App1()
+    app.on_execute()
