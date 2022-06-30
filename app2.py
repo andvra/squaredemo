@@ -206,10 +206,10 @@ class App2:
 
 if __name__ == "__main__":
     app = App2()
-    splits = app.get_splits(8, math.pi/6)
-    a: bool
-    b: SquareData
-    for a, b in splits:
-        print(b.as_array())
+    # splits = app.get_splits(8, math.pi/6)
+    # a: bool
+    # b: SquareData
+    # for a, b in splits:
+    #     print(b.as_array())
 
-    # app.on_execute()
+    app.on_execute()
