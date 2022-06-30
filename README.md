@@ -9,3 +9,11 @@ OK so a simple version of this, App1, is to just recursively build all the squar
 1. Run a quick initial recursion with the purpose to split the binary tree into multiple parts (= number of available processes) and send each of these subtrees into the recursion.
 1. Store calculations into a pre-allocated array.
 1. Drawing the squares is a separate task. This will be made on the main thread when calculations are done.
+
+## Installation
+
+pip install -r requirements.txt
+
+## Run
+
+python app2.py
