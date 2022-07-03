@@ -8,7 +8,9 @@ The animation is created by iterating a pretty simple set of rules. We start wit
 
 <img src="./assets/squares.png" width="400px">
 
-![img](./assets/alpha.svg) loops over the range ![img](./assets/alpharange.svg) 
+![img](./assets/alpha.svg) is increased at each frame and loops until the application is shut down:
+
+![img](./assets/alpharange.svg) 
 
 ## Installation
 
