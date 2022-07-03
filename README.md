@@ -1,6 +1,6 @@
 ## Introduction
 
-This repo is inspired by the following Gif, found [here](https://twitter.com/jagarikin/status/1393428373368545283):
+This repo is inspired by the [following Gif](https://twitter.com/jagarikin/status/1393428373368545283):
 
 ![img](./assets/animation.gif)
 
@@ -32,7 +32,7 @@ pip install -r requirements.txt
 
 python app2.py
 
-## Next step
+## Next steps
 
 1. Run a quick initial recursion with the purpose to split the binary tree into multiple parts (= number of available processes) and send each of these subtrees into the recursion.
 1. Store calculations into a pre-allocated array.
