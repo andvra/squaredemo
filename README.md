@@ -9,7 +9,7 @@ This repo is inspired by the following Gif, found [here](https://twitter.com/jag
 The animation is created using these steps:
 
 1. Defining the points for the bottom of the first square, denoted ![img](./assets/p1.svg) and  ![img](./assets/p4.svg), and its side length  ![img](./assets/l.svg)
-1. Calculate the top points in the square, denoted  ![img](./assets/p2.svg) and ![img](./assets/p3.svg), by calculating the normal of the line ![img](./assets/p4p1.svg)
+1. Calculate the top points in the square, denoted  ![img](./assets/p2.svg) and ![img](./assets/p3.svg), using the normal of the line ![img](./assets/p4p1.svg)
 1. Calculate ![img](./assets/p5.svg), using the angle ![img](./assets/alpha.svg) and side length ![img](./assets/lcosa.svg)
 1. Repeat from step 2, using ![img](./assets/p5p2.svg) and ![img](./assets/p3p5.svg) as base lines, until a minimum side length or maximum recursion depth is reached
 
