@@ -32,7 +32,9 @@ $ pip install -r requirements.txt
 
 ## Run
 
-python app2.py
+```
+$ python app2.py
+```
 
 ## Next steps
 
