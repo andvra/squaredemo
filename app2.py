@@ -191,11 +191,11 @@ class App2:
                 t_current = (pygame.time.get_ticks() %
                              self.loop_duration_ms)/self.loop_duration_ms
                 angle_rad = t_current*math.pi/2
-                splits = self.get_splits(
-                    num_processes_to_use, angle_rad, array)
+                #splits = self.get_splits(
+                #    num_processes_to_use, angle_rad, array)
                 # TODO: Add the game loop here. Get splits in each iteration. Then run starmap() with the branches as arguments
-                pool.starmap(multi_test_func, [
-                    (batchIdx, array) for batchIdx in range(8)])
+                #pool.starmap(multi_test_func, [
+                #    (batchIdx, array) for batchIdx in range(8)])
                 # TODO: Our array will now hold the values we need.
                 # What about encoding it, like [idx, data1, data2] directly in the array? Maging in max_square*num_bits long
                 for event in pygame.event.get():
